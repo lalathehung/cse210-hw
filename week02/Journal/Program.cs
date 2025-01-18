@@ -1,3 +1,6 @@
+//CSE210 W02 Journal by Lok Yin Arthur Leung
+//Creativity: I have added the total number of entries to the saved file for better tracking;
+//Creativity: I have added 15 extra prompts.
 using System;
 
 namespace DailyJournal
