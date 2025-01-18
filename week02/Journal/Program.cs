@@ -10,22 +10,26 @@ namespace DailyJournal
 
             List<string> prompts = new List<string>
             {
-                "Did anything unexpected happen today that surprised you? ",
-                "What was the most challenging thing you faced today and how did you overcome it? ",
-                "What was the best moment of your day and why? ",
-                "Who did you share a special moment with today? ",
-                "Did you discover anything new or learn something interesting today? ",
-                "Did someone make you feel special or make you smile today?" ,
-                "Did you achieve any success in your work, studies or personal projects today? ",
-                "Did you do anything today that took you out of your comfort zone? ",
-                "What would you like to do more of in your daily life and how do you plan to achieve it? ",
-                "What do you most wish for tomorrow? ",
-                "How did you show love or compassion towards others today, inspired by your faith? ",
-                "Did you receive any unexpected blessings today that you attribute to your faith? If so, can you describe them? ",
-                "What was the most inspiring thing you heard or read today that strengthened your faith? ",
-                "How did you feel God's presence in your life today? ",
-                "What was the most meaningful spiritual experience you had today? ",
-                "How did you demonstrate your faith through actions or choices you made today? ",
+                "What is one thing you accomplished today that you are proud of? ",
+                "Who made a positive impact on your day, and how did they do it? ",
+                "What is one thing you learned today that you want to remember? ",
+                "What was the most peaceful moment of your day? ",
+                "How did you show kindness to someone else today? ",
+                "What was a small but meaningful victory you had today? " ,
+                "What challenged your patience today, and how did you handle it? ",
+                "What is something you are grateful for that you might have taken for granted? ",
+                "If you could relive one moment from today, what would it be and why? ",
+                "How did you take care of yourself physically or emotionally today? ",
+                "What made you laugh or brought you joy today? ",
+                "How did you feel inspired or motivated today? ",
+                "Was there a moment today where you felt particularly connected to someone else? ",
+                "What is one thing you wish you could improve or do differently tomorrow? ",
+                "How did you handle stress or a difficult situation today? ",
+                "What made you feel creative or innovative today? ",
+                "How did you feel our Havenly Father loved you today? ",
+                "What did you want to tell our Heavenly Father? ",
+                "How did you feel about the decisions you made today? ",
+                "What are you going to do tomorrrow to improve yourself? ",
             };
 
             bool isRunning = true;
@@ -63,14 +67,14 @@ namespace DailyJournal
                         break;
                     //Quit
                     case "5":
-                        quit = true;
+                        isRunning = false;
                         break;
                     default:
                         Console.WriteLine("Invalid choice.");
                         break;
                 }
             }
-            Console.WriteLine("Until next time, keep writing!");
+            Console.WriteLine("Goodbye! See you later!");
         }
 
         static string GetRandomPrompt(List<string> prompts)
