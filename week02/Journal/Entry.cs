@@ -4,9 +4,9 @@ namespace DailyJournal
 {
     class Entry
     {
-        public string _prompt;
-        public string _response;
-        public string _date;
+        private string _prompt;
+        private string _response;
+        private string _date;
 
         public Entry(string prompt, string response, string date)
         {

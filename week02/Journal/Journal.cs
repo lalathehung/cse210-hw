@@ -4,7 +4,7 @@ namespace DailyJournal
 {
     class Journal
     {
-        public List<Entry> entries;
+        private List<Entry> entries;
 
         public Journal()
         {
@@ -15,7 +15,7 @@ namespace DailyJournal
         {
             Console.Write(prompt + " ");
             string response = Console.ReadLine();
-            string date = DateTime.Now.ToString("MM/dd/yyyy");
+            string date = DateTime.Now.ToString("mm/dd/yyyy");
             entries.Add(new Entry(prompt, response, date));
         }
 
