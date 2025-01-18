@@ -34,14 +34,14 @@ namespace DailyJournal
             using (StreamWriter writer = new StreamWriter(filename))
             {
                 writer.WriteLine("Date,Prompt,Response");
-
                 foreach (Entry entry in entries)
                 {
                     writer.WriteLine($"{entry.GetDate()},{entry.GetPrompt().Replace(",", ",,")},{entry.GetResponse().Replace(",", ",,")}");
                 }
+                writer.WriteLine($"Total Entries: {entries.Count}");
             }
 
-            Console.WriteLine("Saved");
+            Console.WriteLine("Journal saved successfully to " + filename);
         }
 
         public void LoadFromFile()
