@@ -28,10 +28,10 @@ namespace DailyJournal
                 "How did you demonstrate your faith through actions or choices you made today? ",
             };
 
-            bool quit = false;
-            while (!quit)
+            bool isRunning = true;
+            while (isRunning)
             {
-                Console.WriteLine("\nWelcome to the Journal Program");
+                Console.WriteLine("\n===Welcome to the Journal Program!===");
                 Console.WriteLine("Please Select one of the following choices:");
                 Console.WriteLine("1. Write");
                 Console.WriteLine("2. Display");
@@ -44,19 +44,24 @@ namespace DailyJournal
 
                 switch (choice)
                 {
+                    //Write
                     case "1":
                         string prompt = GetRandomPrompt(prompts);
                         journal.AddEntry(prompt);
                         break;
+                    //Display
                     case "2":
                         journal.DisplayEntries();
                         break;
+                    //Save
                     case "3":
                         journal.SaveToFile();
                         break;
+                    //Load
                     case "4":
                         journal.LoadFromFile();
                         break;
+                    //Quit
                     case "5":
                         quit = true;
                         break;

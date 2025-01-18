@@ -25,7 +25,7 @@ namespace DailyJournal
             {
                 Console.WriteLine(entry.ToString());
             }
-        }
+        }        
         public void SaveToFile()
         {
             Console.Write("Enter Filename: ");
@@ -52,7 +52,7 @@ namespace DailyJournal
 
             using (StreamReader reader = new StreamReader(filename))
             {
-                string headerLine = reader.ReadLine(); // Read and discard the header line
+                string headerLine = reader.ReadLine(); 
 
                 while (!reader.EndOfStream)
                 {
