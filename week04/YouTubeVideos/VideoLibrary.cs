@@ -9,21 +9,21 @@ public class VideoLibrary {
     //constructor
     public VideoLibrary(){
 
-        video1 = new Video("Dogs are Cute", "DoggyDayz", "3:15");
-        video2 = new Video("How to Eat Cheese", "IHeartCheese", "32:21");
-        video3 = new Video("Best Books for Whale Lovers", "BookyBook", "1:07");
+        video1 = new Video("12 Things You NEED To Know Before Law School", "Tex", "11:21");
+        video2 = new Video("Campus in 2 Minutes | Get to Know BYU-Idaho", "BYU-Idaho", "2:02");
+        video3 = new Video("Installing MySQL and Creating Databases | MySQL for Beginners", "Alex The Analyst", "12:04");
 
-        video1.AddComment(new Comment("Silly Head", "Great video! It changed my life and now I'm a millionaire!!!"));
-        video1.AddComment(new Comment("Meany Face", "Stupidest video ever! Till the day I die, I will never forget how much time I wasted watching this!!!"));
-        video1.AddComment(new Comment("Timmy Taco", "Meh!!!"));
+        video1.AddComment(new Comment("diarybysophiac", "I am really glad that I bumped into this video."));
+        video1.AddComment(new Comment("jamieruiz2445", "This is really solidifying my decision to go to Law School,  Thank you so much."));
+        video1.AddComment(new Comment("JPWick", "This is the REALEST feedback on law school. Big ups"));
 
-        video2.AddComment(new Comment("Gouda Goodman", "I still don't get it, please help!"));
-        video2.AddComment(new Comment("Colby Jack", "But what about goat cheese?"));
-        video2.AddComment(new Comment("Swissy Missy", "This is the hardest video I've ever had to follow. I still can't figure out how to eat cheese."));
+        video2.AddComment(new Comment("konankouadio5509", "The best university."));
+        video2.AddComment(new Comment("lalathehung", "So proud that I belongs to here!"));
+        video2.AddComment(new Comment("yuetshung2", "Can I earn a degree from BYU-Idaho without coming to Rexburg?"));
 
-        video3.AddComment(new Comment("Bob Bobster Bobington", "I am the biggest whale fan ever. Finally someone who understands me!!!"));
-        video3.AddComment(new Comment("Herman Melville", "I don't know what I would have done without this inspiring list of books!"));
-        video3.AddComment(new Comment("Blubbery Blubberson", "Not the most comprehensive list. You forgot all the other great whale books."));
+        video3.AddComment(new Comment("Tebas321", "I just start the bootcamp and I got to say this is by far the most practical course that I found to learn MySQL, Thank you very much Alex."));
+        video3.AddComment(new Comment("sols9019", "Lesson 1, Done! Excited to move to the next tutorial. Very handy with clear instructions Alex! Thankie!"));
+        video3.AddComment(new Comment("desmondhenrymarfo2073", "I'm now beginning this SQL journey and I´m happy to be your student... Fully subscribed!"));
 
         videoLibrary = new List<Video>
         {

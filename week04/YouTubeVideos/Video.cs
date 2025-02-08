@@ -43,6 +43,6 @@ public class Video
         string videoInfo = $"\nVideo: {_title} \nBy {_author} {_length} minutes\n{numComments} comments\n";
         string comments = DisplayCommentList();
 
-        return "\no----------o----------o----------o\n" + videoInfo + "\no----------o----------o----------o\n" + "\nComments:\n" + comments;
+        return "\n----------------------------------\n" + videoInfo + "\n----------------------------------\n" + "\nComments:\n" + comments;
     }
 }
