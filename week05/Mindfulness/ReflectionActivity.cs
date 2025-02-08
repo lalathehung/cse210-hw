@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Mindfulness
 {
     public class ReflectionActivity : Activity
     {
+        private static Random _random = new Random(); // Static Random instance
         private List<string> _prompts;
         private List<string> _questions;
 
-        public ReflectionActivity(string name, string description, int duration, List<string> prompts, List<string> questions) : base(name, description, duration)
+        public ReflectionActivity(string name, string description, int duration, List<string> prompts, List<string> questions) 
+            : base(name, description, duration)
         {
             _prompts = prompts;
             _questions = questions;
@@ -20,63 +21,49 @@ namespace Mindfulness
         {
             Duration = duration;
         }
+
         public string GetRandomPrompt()
         {
-            Random random = new Random();
-            int length = _prompts.Count;
-            int randomIndex = random.Next(0, length);
-            string randomPrompt = _prompts[randomIndex];
-            return randomPrompt;
+            return _prompts[_random.Next(_prompts.Count)];
         }
+
         public string GetRandomQuestion()
         {
-            Random random = new Random();
-            int length = _questions.Count;
-            int randomIndex = random.Next(0, length);
-            string randomQuestion = _questions[randomIndex];
-            return randomQuestion;
+            return _questions[_random.Next(_questions.Count)];
         }
 
         public void DisplayQuestion()
         {
             Console.WriteLine(GetRandomQuestion());
         }
+
         public void Run()
         {
             DisplayStartingMessage();
 
             Console.WriteLine("Consider the following prompt: ");
             Console.WriteLine($"--- {GetRandomPrompt()} ---");
-            Console.WriteLine("When you have something in mind, press enter to continue.\n");
-            string input = Console.ReadLine();
+            Console.WriteLine("When you have something in mind, press Enter to continue.\n");
+            Console.ReadLine();
 
-            if (input == "")
+            Console.Write("You may begin in: ");
+            ShowCountDown(3);
+            Console.Clear();
+
+            DateTime startTime = DateTime.Now;
+            DateTime endTime = startTime.AddSeconds(Duration);
+
+            while (DateTime.Now < endTime)
             {
-                Console.Write("You may begin in: ");
-                ShowCountDown(3);
-                Console.Clear();
-
-                DateTime startTime = DateTime.Now;
-                TimeSpan elapsedTime = DateTime.Now - startTime;
-
-                while (elapsedTime < TimeSpan.FromSeconds(Duration))
-                {
-                    foreach (string question in _questions)
-                    {
-                       if (elapsedTime >= TimeSpan.FromSeconds(Duration))
-                {
-                    break;
-                }
-
                 DisplayQuestion();
                 ShowSpinner(5);
-                Thread.Sleep(300);
 
-                elapsedTime = DateTime.Now - startTime;
-                    }
-                }
+                // Ensure the loop doesn't run beyond the time limit
+                if (DateTime.Now >= endTime) 
+                    break;
             }
+
             DisplayEndingMessage();
-        } //end of Run
+        }
     }
 }

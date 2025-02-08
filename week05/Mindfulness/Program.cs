@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Mindfulness;
-
+//Creativity: I have ccreated a log of how many times activities were performed.
 class Program
 {
     static Dictionary<string, int> activityCounts = new Dictionary<string, int>()
