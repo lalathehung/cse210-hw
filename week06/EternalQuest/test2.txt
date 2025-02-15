@@ -1,0 +1,3 @@
+0
+SimpleGoal: Go to bed at 10:30pm | Go to bed earlier  | 50 | False
+EternalGoal: Scripture reading | Reading a chapter every evening | 50
