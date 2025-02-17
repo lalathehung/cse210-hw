@@ -1,0 +1,2 @@
+500
+SimpleGoal: Take more rest | Go to back at 9:30pm | 500 | True
