@@ -141,22 +141,36 @@ namespace EternalQuest
             _goals.Clear();
             using (StreamReader reader = new StreamReader(filename))
             {
-                _score = int.Parse(reader.ReadLine()); // Load score
+                if (!int.TryParse(reader.ReadLine(), out _score))
+                {
+                    Console.WriteLine("❌ Error: Invalid score format in file.");
+                    return;
+                }
 
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] parts = line.Split('|');
-                    string type = parts[0].Trim();
+                    if (parts.Length < 4)
+                    {
+                        Console.WriteLine("❌ Error: Invalid goal format.");
+                        continue;
+                    }
 
+                    string type = parts[0].Trim();
                     string name = parts[1].Trim();
                     string description = parts[2].Trim();
-                    int points = int.Parse(parts[3].Trim());
+
+                    if (!int.TryParse(parts[3].Trim(), out int points))
+                    {
+                        Console.WriteLine($"❌ Error: Invalid points format in goal: {line}");
+                        continue;
+                    }
 
                     if (type.StartsWith("SimpleGoal"))
                     {
-                        bool isComplete = bool.Parse(parts[4].Trim());
-                        _goals.Add(new SimpleGoal(name, description, points) { });
+                        bool isComplete = parts.Length > 4 && bool.TryParse(parts[4].Trim(), out bool completed) && completed;
+                        _goals.Add(new SimpleGoal(name, description, points));
                     }
                     else if (type.StartsWith("EternalGoal"))
                     {
@@ -164,10 +178,16 @@ namespace EternalQuest
                     }
                     else if (type.StartsWith("ChecklistGoal"))
                     {
-                        int amountCompleted = int.Parse(parts[4].Trim());
-                        int target = int.Parse(parts[5].Trim());
-                        int bonus = int.Parse(parts[6].Trim());
-                        _goals.Add(new ChecklistGoal(name, description, points, target, bonus) { });
+                        if (parts.Length < 7 ||
+                            !int.TryParse(parts[4].Trim(), out int amountCompleted) ||
+                            !int.TryParse(parts[5].Trim(), out int target) ||
+                            !int.TryParse(parts[6].Trim(), out int bonus))
+                        {
+                            Console.WriteLine($"❌ Error: Invalid checklist goal format: {line}");
+                            continue;
+                        }
+
+                        _goals.Add(new ChecklistGoal(name, description, points, target, bonus));
                     }
                 }
             }
@@ -176,4 +196,3 @@ namespace EternalQuest
         }
     }
 }
-
