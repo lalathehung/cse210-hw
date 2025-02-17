@@ -1,9 +1,11 @@
-// ChecklistGoal.cs
 using System;
+
 namespace EternalQuest
 {
     public class ChecklistGoal : Goal
     {
+        private string _goalType;
+        private bool _isComplete;
         private int _amountCompleted;
         private int _target;
         private int _bonus;
@@ -11,31 +13,74 @@ namespace EternalQuest
         public ChecklistGoal(string name, string description, int points, int target, int bonus) 
             : base(name, description, points)
         {
+            _goalType = "Checklist Goal";
+            _isComplete = false;
             _amountCompleted = 0;
             _target = target;
             _bonus = bonus;
         }
 
-        public int Amount => _amountCompleted;
-        public int Target => _target;
-        public int Bonus => _bonus;
-
-        public override void RecordEvent()
+        public int Amount
         {
-            _amountCompleted++;
-            Console.WriteLine($"✅ {ShortName}: Completed {_amountCompleted}/{_target} times!");
-
-            if (_amountCompleted >= _target)
+            get => _amountCompleted;
+            set
             {
-                Console.WriteLine($"🎉 Bonus unlocked! You earned {_bonus} extra points!");
+                if (value >= 0)
+                    _amountCompleted = value;
             }
         }
 
-        public override bool IsComplete() => _amountCompleted >= _target;
+        public int Target
+        {
+            get => _target;
+            set
+            {
+                if (value >= 0)
+                    _target = value;
+            }
+        }
+
+        public int Bonus
+        {
+            get => _bonus;
+            set
+            {
+                if (value >= 0)
+                    _bonus = value;
+            }
+        }
+
+        public override void RecordEvent()
+        {
+            Amount++;
+
+            Console.WriteLine($"Progress recorded for '{ShortName}'. Completed {Amount}/{Target} times.");
+
+            if (Amount >= Target)
+            {
+                _isComplete = true;
+                Console.WriteLine($"Congratulations! Goal '{ShortName}' completed! You earned {Bonus} bonus points!");
+            }
+        }
+
+        public override int ShowPoints()
+        {
+            return Amount >= Target ? Points + Bonus : Points;
+        }
+
+        public override bool IsComplete()
+        {
+            return Amount >= Target;
+        }
+
+        public override void SetComplete()
+        {
+            _isComplete = true;
+        }
 
         public override string GetStringRepresentation()
         {
-            return $"ChecklistGoal: {ShortName} | {Description} | {Points} | {_amountCompleted}/{_target} | {_bonus}";
+            return $"{_goalType}: {ShortName} | {Description} | {Points} | {IsComplete()} | {Amount} | {Target} | {Bonus}";
         }
     }
 }

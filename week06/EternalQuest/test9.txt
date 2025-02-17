@@ -1,0 +1,2 @@
+0
+SimpleGoal: go to bed at 10 | go to bed at 10 | 100 | False

@@ -1,6 +1,5 @@
-// Program.cs
 using System;
-using System.Collections.Generic;
+using System.Collections.Generic; // Required for List<Goal>
 using EternalQuest;
 
 class Program
