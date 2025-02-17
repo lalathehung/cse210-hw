@@ -1,0 +1,5 @@
+300
+Simple Goal:Book reading|Read a book|100|True
+Eternal Goal: read the scipture | read the scripture | 50
+Checklist Goal: bodybuilding | go to the gym | 20 | False | 0 | 200 | 5
+Simple Goal:go to bed early|go to bed at 9:30 pm|100|True

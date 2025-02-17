@@ -8,11 +8,17 @@ namespace EternalQuest
     {
         private List<Goal> _goals;
         private int _score;
+        private int _level;
+        private int _xp;
+        private int _xpToNextLevel;
 
         public GoalManager(List<Goal> goals, int score)
         {
             _goals = goals ?? new List<Goal>();
             _score = score;
+            _level = 1; // Start at Level 1
+            _xp = 0; // Start with 0 XP
+            _xpToNextLevel = 100; // XP required for Level 2
         }
 
         public void CreateGoal(Goal goal)
@@ -42,9 +48,9 @@ namespace EternalQuest
             GoalManager goalManager = GetGoalManager();
             while (running)
             {
-                int score = goalManager.GetScore();
+                Console.WriteLine($"\n🎯 You are Level {_level} with {_xp}/{_xpToNextLevel} XP.");
+                Console.WriteLine($"🏆 You have {_score} points.");
 
-                Console.WriteLine($"\nYou have {score} points");
                 Console.WriteLine("\nMenu Options:");
                 Console.WriteLine("  1. Create New Goal");
                 Console.WriteLine("  2. List Goals");
@@ -131,7 +137,6 @@ namespace EternalQuest
         public void ListGoalNames()
         {
             int count = 0;
-
             foreach (Goal goal in _goals)
             {
                 count++;
@@ -151,6 +156,39 @@ namespace EternalQuest
             }
         }
 
+        public void RecordEvent()
+        {
+            Console.Write("Which goal did you accomplish? ");
+            if (int.TryParse(Console.ReadLine(), out int goalIndex) && goalIndex > 0 && goalIndex <= _goals.Count)
+            {
+                Goal thisGoal = _goals[goalIndex - 1];
+                thisGoal.RecordEvent();
+
+                int pointsEarned = thisGoal.ShowPoints();
+                _score += pointsEarned;
+                _xp += pointsEarned;
+
+                Console.WriteLine($"You earned {pointsEarned} XP! 🎉");
+                CheckLevelUp();
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid goal number.");
+            }
+        }
+
+        public void CheckLevelUp()
+        {
+            while (_xp >= _xpToNextLevel)
+            {
+                _xp -= _xpToNextLevel;
+                _level++;
+                _xpToNextLevel += 50;
+
+                Console.WriteLine($"🎉 Congratulations! You leveled up to Level {_level}! 🎯");
+            }
+        }
+
         public void SaveGoals()
         {
             Console.Write("What would you like to name your file (include .txt extension)? ");
@@ -165,7 +203,7 @@ namespace EternalQuest
             try
             {
                 List<string> goalRepList = new List<string>();
-                goalRepList.Add(_score.ToString()); // Save the score at the top
+                goalRepList.Add($"{_level}|{_xp}|{_xpToNextLevel}|{_score}");
 
                 foreach (Goal goal in _goals)
                 {
@@ -173,14 +211,7 @@ namespace EternalQuest
                     goalRepList.Add(goalString);
                 }
 
-                using (StreamWriter writer = new StreamWriter(fileName))
-                {
-                    foreach (string goalRep in goalRepList)
-                    {
-                        writer.WriteLine(goalRep);
-                    }
-                }
-
+                File.WriteAllLines(fileName, goalRepList);
                 Console.WriteLine($"Goals saved successfully to {fileName}");
             }
             catch (Exception ex)
@@ -199,52 +230,16 @@ namespace EternalQuest
                 return;
             }
 
-            _goals.Clear();
-            _score = int.Parse(File.ReadLines(fileName).First());
+            string[] firstLine = File.ReadLines(fileName).First().Split("|");
+            _level = int.Parse(firstLine[0]);
+            _xp = int.Parse(firstLine[1]);
+            _xpToNextLevel = int.Parse(firstLine[2]);
+            _score = int.Parse(firstLine[3]);
 
+            _goals.Clear();
             foreach (string line in File.ReadLines(fileName).Skip(1))
             {
-                string[] parts = line.Split(":");
-                string goalType = parts[0].Trim();
-                string[] details = parts[1].Trim().Split("|");
-
-                string name = details[0].Trim();
-                string description = details[1].Trim();
-                int points = int.Parse(details[2].Trim());
-
-                if (goalType == "Simple Goal")
-                {
-                    bool isComplete = bool.Parse(details[3].Trim());
-                    _goals.Add(new SimpleGoal(name, description, points, isComplete));
-                }
-                else if (goalType == "Checklist Goal")
-                {
-                    int amount = int.Parse(details[4].Trim());
-                    int target = int.Parse(details[5].Trim());
-                    int bonus = int.Parse(details[6].Trim());
-                    var checklistGoal = new ChecklistGoal(name, description, points, target, bonus) { Amount = amount };
-                    _goals.Add(checklistGoal);
-                }
-                else if (goalType == "Eternal Goal")
-                {
-                    _goals.Add(new EternalGoal(name, description, points));
-                }
-            }
-        }
-
-        public void RecordEvent()
-        {
-            Console.Write("Which goal did you accomplish? ");
-            if (int.TryParse(Console.ReadLine(), out int goalIndex) && goalIndex > 0 && goalIndex <= _goals.Count)
-            {
-                Goal thisGoal = _goals[goalIndex - 1];
-                thisGoal.RecordEvent();
-                _score += thisGoal.ShowPoints();
-                Console.WriteLine($"Your score is now {_score}!");
-            }
-            else
-            {
-                Console.WriteLine("Invalid input. Please enter a valid goal number.");
+                Console.WriteLine($"Loaded: {line}");
             }
         }
 
