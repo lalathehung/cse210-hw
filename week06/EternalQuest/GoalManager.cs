@@ -26,7 +26,7 @@ namespace EternalQuest
             bool running = true;
             while (running)
             {
-                Console.WriteLine($"\n🎯 You are Level {_level} with {_xp}/{_xpToNextLevel} XP.");
+                Console.WriteLine($"\n🎯 You are **{GetTitle()}** (Level {_level}) with {_xp}/{_xpToNextLevel} XP.");
                 Console.WriteLine($"🏆 You have {_score} points.");
                 Console.WriteLine($"\nMenu Options:");
 
