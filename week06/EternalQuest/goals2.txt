@@ -1,4 +1,2 @@
-5|100|300|800
-Checklist Goal: temple visit | visiting the temple | 200 | True | 3 | 2 | 100
-Simple Goal:run a marathon|run a marathon|500|False
-Eternal Goal: read the scripture | read the scripture each day | 40
+6|50|350|1050
+Eternal Goal: read the scipture | read the scripture | 50
