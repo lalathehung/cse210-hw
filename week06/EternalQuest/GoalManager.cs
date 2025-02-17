@@ -21,31 +21,10 @@ namespace EternalQuest
             _xpToNextLevel = 100; // XP required for Level 2
         }
 
-        public void CreateGoal(Goal goal)
-        {
-            Console.Write("What is the name of your goal? ");
-            string name = Console.ReadLine();
-
-            Console.Write("What is a short description of your goal? ");
-            string description = Console.ReadLine();
-
-            Console.Write("How many points would you like associated with this goal? ");
-            if (!int.TryParse(Console.ReadLine(), out int points))
-            {
-                Console.WriteLine("Invalid input. Setting points to 0.");
-                points = 0;
-            }
-
-            goal.ShortName = name;
-            goal.Description = description;
-            goal.Points = points;
-            _goals.Add(goal);
-        }
-
         public void Start()
         {
             bool running = true;
-            GoalManager goalManager = GetGoalManager();
+
             while (running)
             {
                 Console.WriteLine($"\n🎯 You are Level {_level} with {_xp}/{_xpToNextLevel} XP.");
@@ -75,19 +54,19 @@ namespace EternalQuest
                     if (goalType == "1")
                     {
                         SimpleGoal simpleGoal = new SimpleGoal("", "", 0);
-                        goalManager.CreateGoal(simpleGoal);
+                        CreateGoal(simpleGoal);
                         Console.WriteLine($"New goal: {simpleGoal.ShortName} has been created!");
                     }
                     else if (goalType == "2")
                     {
                         EternalGoal eternalGoal = new EternalGoal("", "", 0);
-                        goalManager.CreateGoal(eternalGoal);
+                        CreateGoal(eternalGoal);
                         Console.WriteLine($"New goal: {eternalGoal.ShortName} has been created!");
                     }
                     else if (goalType == "3")
                     {
                         ChecklistGoal checklistGoal = new ChecklistGoal("", "", 0, 0, 0);
-                        goalManager.CreateGoal(checklistGoal);
+                        CreateGoal(checklistGoal);
 
                         Console.Write("How many times does this goal need to be accomplished for a bonus? ");
                         if (!int.TryParse(Console.ReadLine(), out int targetAnswer))
@@ -111,20 +90,20 @@ namespace EternalQuest
                 else if (choice == "2")
                 {
                     Console.WriteLine("\nYour goals are: ");
-                    goalManager.ListGoalNames();
+                    ListGoalNames();
                 }
                 else if (choice == "3")
                 {
-                    goalManager.SaveGoals();
+                    SaveGoals();
                 }
                 else if (choice == "4")
                 {
-                    goalManager.LoadGoals();
+                    LoadGoals();
                 }
                 else if (choice == "5")
                 {
-                    goalManager.ListGoalNames();
-                    goalManager.RecordEvent();
+                    ListGoalNames();
+                    RecordEvent();
                 }
                 else if (choice == "6")
                 {
@@ -132,6 +111,27 @@ namespace EternalQuest
                     Console.WriteLine("\nGoodbye!\n");
                 }
             }
+        }
+
+        public void CreateGoal(Goal goal)
+        {
+            Console.Write("What is the name of your goal? ");
+            string name = Console.ReadLine();
+
+            Console.Write("What is a short description of your goal? ");
+            string description = Console.ReadLine();
+
+            Console.Write("How many points would you like associated with this goal? ");
+            if (!int.TryParse(Console.ReadLine(), out int points))
+            {
+                Console.WriteLine("Invalid input. Setting points to 0.");
+                points = 0;
+            }
+
+            goal.ShortName = name;
+            goal.Description = description;
+            goal.Points = points;
+            _goals.Add(goal);
         }
 
         public void ListGoalNames()
@@ -226,31 +226,40 @@ namespace EternalQuest
             string fileName = Console.ReadLine();
             if (!File.Exists(fileName))
             {
-                Console.WriteLine("File not found.");
+                Console.WriteLine("❌ File not found.");
                 return;
             }
 
-            string[] firstLine = File.ReadLines(fileName).First().Split("|");
+            string[] fileLines = File.ReadAllLines(fileName);
+            if (fileLines.Length == 0)
+            {
+                Console.WriteLine("❌ The file is empty. Cannot load goals.");
+                return;
+            }
+
+            string[] firstLine = fileLines[0].Split("|");
+
+            if (firstLine.Length < 4)
+            {
+                Console.WriteLine("❌ Invalid file format. Cannot load goals.");
+                return;
+            }
+
             _level = int.Parse(firstLine[0]);
             _xp = int.Parse(firstLine[1]);
             _xpToNextLevel = int.Parse(firstLine[2]);
             _score = int.Parse(firstLine[3]);
 
             _goals.Clear();
-            foreach (string line in File.ReadLines(fileName).Skip(1))
+
+            foreach (string line in fileLines.Skip(1))
             {
                 Console.WriteLine($"Loaded: {line}");
             }
-        }
 
-        public int GetScore()
-        {
-            return _score;
-        }
-
-        public GoalManager GetGoalManager()
-        {
-            return this;
+            Console.WriteLine($"✅ Successfully loaded goals from {fileName}!");
         }
     }
 }
+
+
