@@ -1,2 +1,2 @@
 1000
-ChecklistGoal: Get sealed in the temple | Get sealed in the temple | 1000 | 1/1 | 1000
+SimpleGoal: Take more rest | Sleep for 8 hours per day | 100 | False

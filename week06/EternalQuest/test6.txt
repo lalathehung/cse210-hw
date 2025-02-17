@@ -1,0 +1,3 @@
+0
+SimpleGoal: Body Training | Do 100 push ups each day | 100 | False
+ChecklistGoal: Get more rest | Sleep for 8 hours per day | 100 | 0/1 | 20

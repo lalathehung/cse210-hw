@@ -1,0 +1,3 @@
+0
+SimpleGoal: Marathon | attend a marathon | 1000 | False
+EternalGoal: read scripture | read the scripture every day | 100
