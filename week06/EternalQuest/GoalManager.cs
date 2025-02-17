@@ -69,7 +69,13 @@ namespace EternalQuest
                 }
             }
         }
-
+        public string GetTitle()
+        {
+            if (_level < 5) return "Beginner Adventurer";
+            if (_level < 10) return "Seasoned Explorer";
+            if (_level < 20) return "Master Achiever";
+            return "Legendary Goal Conqueror";
+        }
         public void CreateGoal()
         {
             Console.Clear();
