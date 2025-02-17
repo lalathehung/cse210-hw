@@ -1,2 +1,2 @@
 6|50|350|1050
-Eternal Goal: read the scipture | read the scripture | 50
+Simple Goal:apple|eat an apple every day|10|False

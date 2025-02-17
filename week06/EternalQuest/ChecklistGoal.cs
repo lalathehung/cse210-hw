@@ -10,12 +10,12 @@ namespace EternalQuest
         private int _target;
         private int _bonus;
 
-        public ChecklistGoal(string name, string description, int points, int target, int bonus) 
+        public ChecklistGoal(string name, string description, int points, int target, int bonus, int amountCompleted = 0, bool isComplete = false) 
             : base(name, description, points)
         {
             _goalType = "Checklist Goal";
-            _isComplete = false;
-            _amountCompleted = 0;
+            _isComplete = isComplete;
+            _amountCompleted = amountCompleted;
             _target = target;
             _bonus = bonus;
         }
@@ -80,7 +80,8 @@ namespace EternalQuest
 
         public override string GetStringRepresentation()
         {
-            return $"{_goalType}: {ShortName} | {Description} | {Points} | {IsComplete()} | {Amount} | {Target} | {Bonus}";
+            return $"{_goalType}|{ShortName}|{Description}|{Points}|{_isComplete}|{Amount}|{Target}|{Bonus}";
         }
     }
 }
+

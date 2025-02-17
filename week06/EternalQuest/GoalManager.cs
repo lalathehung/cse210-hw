@@ -205,37 +205,67 @@ namespace EternalQuest
         }
 
         public void LoadGoals()
+{
+    Console.Write("What file would you like to load (include extension)? ");
+    string fileName = Console.ReadLine();
+    
+    if (!File.Exists(fileName))
+    {
+        Console.WriteLine("❌ File not found.");
+        return;
+    }
+
+    string[] fileLines = File.ReadAllLines(fileName);
+    if (fileLines.Length == 0)
+    {
+        Console.WriteLine("❌ The file is empty. Cannot load goals.");
+        return;
+    }
+
+    string[] firstLine = fileLines[0].Split("|");
+    _level = int.Parse(firstLine[0]);
+    _xp = int.Parse(firstLine[1]);
+    _xpToNextLevel = int.Parse(firstLine[2]);
+    _score = int.Parse(firstLine[3]);
+
+    _goals.Clear();
+
+    foreach (string line in fileLines.Skip(1))
+    {
+        string[] goalData = line.Split("|");
+
+        if (goalData.Length < 4) // Ensure valid goal data
         {
-            Console.Write("What file would you like to load (include extension)? ");
-            string fileName = Console.ReadLine();
-            if (!File.Exists(fileName))
-            {
-                Console.WriteLine("❌ File not found.");
-                return;
-            }
-
-            string[] fileLines = File.ReadAllLines(fileName);
-            if (fileLines.Length == 0)
-            {
-                Console.WriteLine("❌ The file is empty. Cannot load goals.");
-                return;
-            }
-
-            string[] firstLine = fileLines[0].Split("|");
-            _level = int.Parse(firstLine[0]);
-            _xp = int.Parse(firstLine[1]);
-            _xpToNextLevel = int.Parse(firstLine[2]);
-            _score = int.Parse(firstLine[3]);
-
-            _goals.Clear();
-
-            foreach (string line in fileLines.Skip(1))
-            {
-                Console.WriteLine($"Loaded: {line}");
-            }
-
-            Console.WriteLine($"✅ Successfully loaded goals from {fileName}!");
+            Console.WriteLine($"⚠️ Skipping invalid goal data: {line}");
+            continue;
         }
+
+        string goalType = goalData[0];
+        string name = goalData[1];
+        string description = goalData[2];
+        int points = int.Parse(goalData[3]);
+
+        if (goalType == "SimpleGoal")
+        {
+            bool isComplete = bool.Parse(goalData[4]);
+            _goals.Add(new SimpleGoal(name, description, points, isComplete));
+        }
+        else if (goalType == "EternalGoal")
+        {
+            _goals.Add(new EternalGoal(name, description, points));
+        }
+        else if (goalType == "ChecklistGoal")
+        {
+            int amount = int.Parse(goalData[4]);
+            int target = int.Parse(goalData[5]);
+            int bonus = int.Parse(goalData[6]);
+            _goals.Add(new ChecklistGoal(name, description, points, target, bonus, amount));
+        }
+    }
+
+    Console.WriteLine($"✅ Successfully loaded goals from {fileName}!");
+}
+
 
         public int GetScore()
         {

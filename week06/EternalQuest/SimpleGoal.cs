@@ -46,10 +46,7 @@ namespace EternalQuest
 
         public override string GetStringRepresentation()
         {
-            return $"Simple Goal:{ShortName.Trim()}|{Description.Trim()}|{Points}|{_isComplete}";
+            return $"Simple Goal|{ShortName.Trim()}|{Description.Trim()}|{Points}|{_isComplete}";
         }
     }
 }
-
-
-
