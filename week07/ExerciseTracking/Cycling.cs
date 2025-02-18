@@ -7,8 +7,20 @@ public class Cycling : Activity
 
     private void SetCyclingSpeed()
     {
-        Console.Write("Enter cycling speed (km/h or mph): ");
-        _cyclingSpeed = int.Parse(Console.ReadLine());
+        bool isValid = false;
+        while (!isValid)
+        {
+            Console.Write("Enter cycling speed (km/h or mph): ");
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out _cyclingSpeed) && _cyclingSpeed > 0)
+            {
+                isValid = true;
+            }
+            else
+            {
+                Console.WriteLine("⚠ Invalid input. Please enter a valid positive number.");
+            }
+        }
     }
 
     private int GetCyclingSpeed()
@@ -18,12 +30,7 @@ public class Cycling : Activity
 
     public override double CalculateDistance()
     {
-        double distance = 0;
-        if (GetMetricUnit() == "km" || GetMetricUnit() == "miles")
-        {
-            distance = GetCyclingSpeed() * GetExerciseDuration() / 60.0; // Distance = Speed * Time / 60
-        }
-        return distance;
+        return GetCyclingSpeed() * GetExerciseDuration() / 60.0; // Distance = Speed * Time / 60
     }
 
     public override double CalculateSpeed()
@@ -42,3 +49,4 @@ public class Cycling : Activity
         SetCyclingSpeed();
     }
 }
+
