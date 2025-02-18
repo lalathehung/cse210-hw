@@ -1,4 +1,3 @@
-
 public abstract class Activity
 {
     private DateTime _date = DateTime.UtcNow;
@@ -14,7 +13,7 @@ public abstract class Activity
     public Activity()
     {}
 
-    private void SetExercisName()
+    private void SetExerciseName()
     {
         Console.Write("Enter the exercise name: ");
         _exerciseName = Console.ReadLine();
@@ -27,7 +26,7 @@ public abstract class Activity
 
     private void SetExerciseDuration()
     {
-        Console.Write("Enter the duration of your exercise: ");
+        Console.Write("Enter the duration of your exercise (minutes): ");
         _exerciseDuration = int.Parse(Console.ReadLine());
     }
 
@@ -49,7 +48,7 @@ public abstract class Activity
 
     public void SetCalculatedSpeed()
     {
-        _speed = Math.Round(CalculatePace(), 1);
+        _speed = Math.Round(CalculateSpeed(), 1);
     }
 
     private double GetCalculatedSpeed()
@@ -60,7 +59,7 @@ public abstract class Activity
 
     public void SetCalculatedPace()
     {
-        _pace = Math.Round(CalculateSpeed(), 1);
+        _pace = Math.Round(CalculatePace(), 1);
     }
 
     private double GetCalculatedPace()
@@ -80,7 +79,7 @@ public abstract class Activity
 
     public void WhichMetricUnit()
     {
-        Console.Write("\nChoose unit for calculation (km for kilometers, mi for miles)");
+        Console.Write("\nChoose unit for calculation (km for kilometers, mi for miles): ");
         string unit = Console.ReadLine();
 
         if (unit.ToLower() == "km")
@@ -95,15 +94,23 @@ public abstract class Activity
 
     public virtual void GetSummary()
     {
+        SetCalculatedDistance();
+        SetCalculatedSpeed();
+        SetCalculatedPace();
+
         string dateFormat = $"{_date.Day} {_monthsInShortFormat[_date.Month - 1]} {_date.Year}";
-        string summary = $"{dateFormat} {GetExerciseName()} ({GetExerciseDuration()} min):  Distance {GetCalculatedDistance()} {GetMetricUnit()}, Speed {GetCalculatedSpeed()} {GetMetricUnit()}, Pace {GetCalculatedPace()} min per {GetMetricUnit()}";
+        string summary = $"{dateFormat} {GetExerciseName()} ({GetExerciseDuration()} min): " +
+                         $"Distance {GetCalculatedDistance()} {GetMetricUnit()}, " +
+                         $"Speed {GetCalculatedSpeed()} {GetMetricUnit()}/h, " +
+                         $"Pace {GetCalculatedPace()} min per {GetMetricUnit()}";
+
         Console.WriteLine(summary);
     }
 
     public void StartExercise()
     {
         WhichMetricUnit();
-        SetExercisName();
+        SetExerciseName();
         SetExerciseDuration();
     }
 }

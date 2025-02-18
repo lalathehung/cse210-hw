@@ -1,4 +1,3 @@
-
 public class Running : Activity
 {
     private double _runningDistance;
@@ -22,11 +21,11 @@ public class Running : Activity
         double distance = 0;
         if (GetMetricUnit() == "km")
         {
-            distance = GetRunningDistance() * GetExerciseDuration() / 1000;
+            distance = GetRunningDistance(); // Distance is input directly in km
         } 
         else if (GetMetricUnit() == "miles")
         {
-            distance = GetRunningDistance() * GetExerciseDuration() / (1000 * 0.62);
+            distance = GetRunningDistance(); // Distance is input directly in miles
         }
         return distance;
     }

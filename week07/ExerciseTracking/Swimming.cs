@@ -1,4 +1,3 @@
-
 public class Swimming : Activity
 {
     private int _numberOfLaps;
@@ -22,24 +21,26 @@ public class Swimming : Activity
         double distance = 0;
         if (GetMetricUnit() == "km")
         {
-            distance = GetSwimmingLaps() * GetExerciseDuration() / 1000;
+            distance = GetSwimmingLaps() * 50 / 1000.0; // Each lap = 50m, convert to km
         } 
         else if (GetMetricUnit() == "miles")
         {
-            distance = GetSwimmingLaps() * GetExerciseDuration() / (1000 * 0.62);
+            distance = GetSwimmingLaps() * 50 / 1000.0 * 0.62; // Convert to miles
         }
         return distance;
     }
 
     public override double CalculateSpeed()
     {
-        double computeLaps = GetSwimmingLaps() / GetExerciseDuration();
-        return computeLaps;
+        double distance = CalculateDistance(); // Get computed distance
+        double computeSpeed = (distance / GetExerciseDuration()) * 60; // Speed = (distance / time) * 60
+        return computeSpeed;
     }
 
     public override double CalculatePace()
     {
-        double computePace = GetExerciseDuration() / GetSwimmingLaps();
+        double distance = CalculateDistance(); // Get computed distance
+        double computePace = GetExerciseDuration() / distance; // Pace = Time / Distance
         return computePace;
     }
 
