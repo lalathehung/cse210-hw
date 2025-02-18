@@ -26,21 +26,21 @@ class Program
                         Running running = new Running();
                         running.StartRunning();
                         activities.Add(running);
-                        Console.WriteLine("\n✅ Running activity added successfully!\n");
+                        Console.WriteLine("\n Running activity added successfully!\n");
                         break;
 
                     case 2:
                         Cycling cycling = new Cycling();
                         cycling.StartCycling();
                         activities.Add(cycling);
-                        Console.WriteLine("\n✅ Cycling activity added successfully!\n");
+                        Console.WriteLine("\n Cycling activity added successfully!\n");
                         break;
 
                     case 3:
                         Swimming swimming = new Swimming();
                         swimming.StartSwimming();
                         activities.Add(swimming);
-                        Console.WriteLine("\n✅ Swimming activity added successfully!\n");
+                        Console.WriteLine("\n Swimming activity added successfully!\n");
                         break;
 
                     case 4:
@@ -50,7 +50,7 @@ class Program
                         }
                         else
                         {
-                            Console.WriteLine("\n📌 Exercise Summary:\n");
+                            Console.WriteLine("\n Exercise Summary:\n");
                             foreach (Activity activity in activities)
                             {
                                 activity.GetSummary();
@@ -59,7 +59,7 @@ class Program
                         break;
 
                     case 5:
-                        Console.WriteLine("\n👋 Exiting program. Thank you for using the Exercise Tracking Project!");
+                        Console.WriteLine("\n Exiting program. Thank you for using the Exercise Tracking Program!");
                         break;
 
                     default:
